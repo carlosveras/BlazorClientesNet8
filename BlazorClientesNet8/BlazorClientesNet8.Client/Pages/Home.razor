@@ -1,0 +1,45 @@
+﻿@page "/"
+
+@rendermode InteractiveServer
+
+@foreach (var item in Categorias.Where(p => p.Status == true))
+{
+    <div class="card">
+        <div class="card-header">
+            <div class="avatar">I</div>
+            <div class="card-header-content">
+                <p>@item.Nome</p>
+                <p>@item.TotalDaCategoria.ToString() itens</p>
+            </div>
+        </div>
+        <img src="@item.IconCSS" class="card-img-top" alt="...">
+        <div class="card-body">
+            <p class="card-text">This photo was taken in a small village in Istra Croatia.</p>
+        </div>
+        <div class="card-footer">
+            <a href="@item.PaginaDetalhes" class="btn btn-link">Details</a>
+        </div>
+    </div>
+}
+
+@code {
+    private List<Categoria> Categorias { get; set; } = new();
+
+    private async Task CarregaCategorias()
+    {
+        var categorias = await _categoriaService.GetAllCategoriasAsync();
+
+        Categorias?.Clear();
+
+        if (Categorias is null) return;
+
+        foreach (var cliente in categorias)
+            Categorias.Add(cliente);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CarregaCategorias();
+    }
+   
+}
