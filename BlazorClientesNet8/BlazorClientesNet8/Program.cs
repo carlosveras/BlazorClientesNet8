@@ -4,8 +4,11 @@ using BlazorClientesNet8.Context;
 using BlazorClientesNet8.Repositories;
 using BlazorClientesNet8.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMudServices();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

@@ -2,25 +2,34 @@
 
 @rendermode InteractiveServer
 
-@foreach (var item in Categorias.Where(p => p.Status == true))
-{
-    <div class="card">
-        <div class="card-header">
-            <div class="avatar">I</div>
-            <div class="card-header-content">
-                <p>@item.Nome</p>
-                <p>@item.TotalDaCategoria.ToString() itens</p>
-            </div>
+
+
+<div style="display: flex; flex-wrap: wrap;">
+    @foreach (var item in Categorias.Where(p => p.Status == true))
+    {
+        <div style="flex: 1; margin: 10px;">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudAvatar Color="Color.Secondary">I</MudAvatar>
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body1">@item.Nome</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardMedia Image="@item.IconCSS" Height="15" />
+                <MudCardContent>
+                    <MudText Typo="Typo.body2">@item.TotalDaCategoria.ToString() itens</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudIconButton Href="@item.PaginaDetalhes" Variant="Variant.Text" Color="Color.Default" />
+                </MudCardActions>
+            </MudCard>
         </div>
-        <img src="@item.IconCSS" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">This photo was taken in a small village in Istra Croatia.</p>
-        </div>
-        <div class="card-footer">
-            <a href="@item.PaginaDetalhes" class="btn btn-link">Details</a>
-        </div>
-    </div>
-}
+    }
+</div>
+
+
 
 @code {
     private List<Categoria> Categorias { get; set; } = new();
@@ -41,5 +50,5 @@
     {
         await CarregaCategorias();
     }
-   
+
 }
