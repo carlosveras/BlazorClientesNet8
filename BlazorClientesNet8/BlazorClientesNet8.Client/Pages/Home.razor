@@ -3,31 +3,27 @@
 @rendermode InteractiveServer
 
 
-
 <div style="display: flex; flex-wrap: wrap;">
     @foreach (var item in Categorias.Where(p => p.Status == true))
     {
         <div style="flex: 1; margin: 10px;">
             <MudCard>
-                <MudCardHeader>
-                    <CardHeaderAvatar>
-                        <MudAvatar Color="Color.Secondary">I</MudAvatar>
-                    </CardHeaderAvatar>
+                <MudCardHeader Class="red-header">
                     <CardHeaderContent>
-                        <MudText Typo="Typo.body1">@item.Nome</MudText>
+                        <MudText Typo="Typo.h6">@item.Nome</MudText>
                     </CardHeaderContent>
                 </MudCardHeader>
-                <MudCardMedia Image="@item.IconCSS" Height="15" />
                 <MudCardContent>
-                    <MudText Typo="Typo.body2">@item.TotalDaCategoria.ToString() itens</MudText>
+                    <MudText Class="bold-total">@item.TotalDaCategoria.ToString()</MudText>
                 </MudCardContent>
                 <MudCardActions>
-                    <MudIconButton Href="@item.PaginaDetalhes" Variant="Variant.Text" Color="Color.Default" />
+                    <MudButton Variant="Variant.Text" Color="Color.Primary" Href="@item.PaginaDetalhes">Detalhes</MudButton>
                 </MudCardActions>
             </MudCard>
         </div>
     }
 </div>
+
 
 
 
