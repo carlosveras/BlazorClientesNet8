@@ -5,8 +5,6 @@ using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-builder.Services.AddMudServices();
-
 builder.Services.AddScoped<IClienteRepository, ClienteService>();
 
 builder.Services.AddScoped<ICategoriaRepository, CategoriaService>();
@@ -15,5 +13,7 @@ builder.Services.AddScoped(http => new HttpClient
 {
     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress),
 });
+
+builder.Services.AddMudServices().AddMudBlazorDialog();
 
 await builder.Build().RunAsync();

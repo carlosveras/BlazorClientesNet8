@@ -1,5 +1,6 @@
 ﻿@page "/counter"
-@rendermode InteractiveAuto
+@inject IDialogService DialogService
+@rendermode InteractiveServer
 
 <PageTitle>Counter</PageTitle>
 
@@ -7,7 +8,15 @@
 
 <p role="status">Current count: @currentCount</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="IncrementCount">Click me</MudButton>
+
+<MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">Open Simple Dialog</MudButton>
+
+<MudButton @onclick="DeleteUser" Variant="Variant.Filled" Color="Color.Error">Delete Records</MudButton>
+<MudButton @onclick="Confirm" Variant="Variant.Filled" Color="Color.Success">Remove Email</MudButton>
+<MudButton @onclick="Download" Variant="Variant.Filled" Color="Color.Warning">Slow Computer</MudButton>
+
+
 
 @code {
     private int currentCount = 0;
@@ -15,5 +24,46 @@
     private void IncrementCount()
     {
         currentCount++;
+    }
+
+
+    private void OpenDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        DialogService.Show<Dialog>("Simple Dialog", options);
+    }
+
+
+
+    private void DeleteUser()
+    {
+        var parameters = new DialogParameters<Dialog>();
+        parameters.Add(x => x.ContentText, "Do you really want to delete these records? This process cannot be undone.");
+        parameters.Add(x => x.ButtonText, "Delete");
+        parameters.Add(x => x.Color, Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        DialogService.Show<Dialog>("Delete", parameters, options);
+    }
+
+    private void Confirm()
+    {
+        var parameters = new DialogParameters<Dialog>();
+        parameters.Add(x => x.ContentText, "Are you sure you want to remove thisguy@emailz.com from this account?");
+        parameters.Add(x => x.ButtonText, "Yes");
+        parameters.Add(x => x.Color, Color.Success);
+
+        DialogService.Show<Dialog>("Confirm", parameters);
+    }
+
+    private void Download()
+    {
+        var parameters = new DialogParameters<Dialog>();
+        parameters.Add(x => x.ContentText, "Your computer seems very slow, click the download button to download free RAM.");
+        parameters.Add(x => x.ButtonText, "Download");
+        parameters.Add(x => x.Color, Color.Info);
+
+        DialogService.Show<Dialog>("Slow Computer Detected", parameters);
     }
 }
