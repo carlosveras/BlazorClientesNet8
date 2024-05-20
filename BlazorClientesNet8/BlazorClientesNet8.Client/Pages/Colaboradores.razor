@@ -1,10 +1,48 @@
 ﻿@page "/Colaboradores"
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+
 @rendermode InteractiveAuto
 
 
 <h1>COLABORADORES</h1>
 
 <a href="/" class="btn btn-primary">Voltar</a>
+<br ><br>
 
+<MudDataGrid Items="@Categorias" Filterable="false" SortMode="@SortMode.None" Groupable="false">
+    <Columns>
+        <PropertyColumn Property="x => x.Id" />
+        <PropertyColumn Property="x => x.Nome" />
+        <PropertyColumn Property="x => x.PaginaDetalhes" Title="Years Employed" />
+        <PropertyColumn Property="x => x.TotalDaCategoria" Format="C" />
+        <TemplateColumn CellClass="d-flex justify-end">
+            <CellTemplate>
+                <MudStack Row>
+                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary">Editar</MudButton>
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+</MudDataGrid>
 
+@code {
+    private List<Categoria> Categorias { get; set; } = new();
 
+    private async Task CarregaCategorias()
+    {
+        var categorias = await _categoriaService.GetAllCategoriasAsync();
+
+        Categorias?.Clear();
+
+        if (Categorias is null) return;
+
+        foreach (var cliente in categorias)
+            Categorias.Add(cliente);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CarregaCategorias();
+    }
+}

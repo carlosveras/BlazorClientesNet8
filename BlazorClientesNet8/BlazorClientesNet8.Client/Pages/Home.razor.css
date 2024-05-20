@@ -9,7 +9,8 @@
 }
 
 .bold-total {
-    color: blue;
+    background-color: red;
+    color: white; /* Opcional: para garantir que o texto fique visível */
     font-family: 'Book Antiqua'
 }
 

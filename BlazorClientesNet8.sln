@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34227.203
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorClientesNet8", "BlazorClientesNet8\BlazorClientesNet8\BlazorClientesNet8.csproj", "{8C9B32B0-BA77-4E2B-B0FD-5768D7E93033}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorClientesNet8", "BlazorClientesNet8\BlazorClientesNet8\BlazorClientesNet8.csproj", "{8C9B32B0-BA77-4E2B-B0FD-5768D7E93033}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorClientesNet8.Client", "BlazorClientesNet8\BlazorClientesNet8.Client\BlazorClientesNet8.Client.csproj", "{AFF5C5D7-2459-4E9F-807D-8D542A04D5EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorClientesNet8.Client", "BlazorClientesNet8\BlazorClientesNet8.Client\BlazorClientesNet8.Client.csproj", "{AFF5C5D7-2459-4E9F-807D-8D542A04D5EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorClientesNet8.Shared", "BlazorClientesNet8.Shared\BlazorClientesNet8.Shared.csproj", "{5513C5B8-C833-4DE7-A4DF-A6DB7ED2D66B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorClientesNet8.Shared", "BlazorClientesNet8.Shared\BlazorClientesNet8.Shared.csproj", "{5513C5B8-C833-4DE7-A4DF-A6DB7ED2D66B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

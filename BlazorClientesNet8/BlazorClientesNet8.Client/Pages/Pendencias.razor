@@ -1,31 +1,31 @@
-﻿@page "/Requisicoes"
+﻿@page "/pendencias"
 @using System.Net.Http.Json
 @inject HttpClient httpClient
 
 @rendermode InteractiveAuto
 
-<h1>REQUISICOES</h1>
+<h1>PENDENCIAS</h1>
 
-<a href="/" class="btn btn-primary"> Voltar</a>
-<br />
-<br />@*
-
+<a href="/" class="btn btn-primary">Voltar</a>
+<br>
+<br>
+@* 
 <MudDataGrid T="Categoria" Items="@Elements.Take(4)" ReadOnly="@_readOnly" EditMode="@(_isCellEditMode ? DataGridEditMode.Cell : DataGridEditMode.Form)"
              StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChanges"
              Bordered="true" Dense="true" EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)">
     <Columns>
-        <PropertyColumn Property="x => x.Number" Title="Nr" IsEditable="false" />
-        <PropertyColumn Property="x => x.Sign" />
-        <PropertyColumn Property="x => x.Name" />
-        <PropertyColumn Property="x => x.Position">
-             <EditTemplate>
+        <PropertyColumn Property="x => x.Id" Title="Nr" IsEditable="false" />
+        <PropertyColumn Property="x => x.Nome" />
+        <PropertyColumn Property="x => x.PaginaDetalhes" />
+        <PropertyColumn Property="x => x.Status" />
+            <EditTemplate>
                 <MudSelect @bind-Value="context.Item.Position" Required RequiredError="You must select a Position!!!" Margin="@Margin.Dense">
                     <MudSelectItem Value="0">zero</MudSelectItem>
                     <MudSelectItem Value="1">one</MudSelectItem>
                     <MudSelectItem Value="17">seventeen</MudSelectItem>
                 </MudSelect>
             </EditTemplate>
-        </PropertyColumn> 
+        </PropertyColumn>
         <PropertyColumn Property="x => x.Molar" Title="Molar mass" />
         <TemplateColumn Hidden="@(_isCellEditMode || _readOnly || _editTriggerRowClick)" CellClass="d-flex justify-end">
             <CellTemplate>
@@ -70,9 +70,23 @@
     private List<string> _events = new();
     private bool _editTriggerRowClick;
 
+    private List<Categoria> Categorias { get; set; } = new();
+
+    private async Task CarregaCategorias()
+    {
+        var categorias = await _categoriaService.GetAllCategoriasAsync();
+
+        Categorias?.Clear();
+
+        if (Categorias is null) return;
+
+        foreach (var cliente in categorias)
+            Categorias.Add(cliente);
+    }
+
     protected override async Task OnInitializedAsync()
     {
-        Elements = await httpClient.GetFromJsonAsync<List<Categoria>>("webapi/periodictable");
+        Elements = await  _categoriaService.GetAllCategoriasAsync();
     }
 
     // events
@@ -90,4 +104,5 @@
     {
         _events.Insert(0, $"Event = CommittedItemChanges, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
     }
-} *@ 
+}
+ *@

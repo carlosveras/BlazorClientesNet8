@@ -1,0 +1,60 @@
+﻿@page "/Categorias"
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+@inject IDialogService Dialog
+
+@rendermode InteractiveAuto
+
+<h1>CATEGORIAS</h1>
+
+<MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" @onclick="OpenDialog">Nova Categoria</MudButton>
+<MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" Href="/">Voltar</MudButton>
+<br />
+<br />
+
+<MudDataGrid T="Categoria" Items="@Elements.Take(100)" Bordered="true" Dense="true">
+    <Columns>
+        <PropertyColumn Property="x => x.Id" Title="Nr" Hidden="true" />
+        <PropertyColumn Property="x => x.Nome" />
+        <PropertyColumn Property="x => x.PaginaDetalhes" />
+        <PropertyColumn Property="x => x.Status" Hidden="true" />
+        <TemplateColumn Title="Status">
+            <CellTemplate>
+                @if (context.Item.Status)
+                {
+                    <MudText>Ativo</MudText>
+                }
+                else
+                {
+                    <MudText>Inativo</MudText>
+                }
+            </CellTemplate>
+        </TemplateColumn>
+        <PropertyColumn Property="x => x.TotalDaCategoria" Title="Total Categoria" />
+        <TemplateColumn>
+            <CellTemplate>
+                <MudStack Row>
+                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" @onclick="OpenDialog">Editar</MudButton>
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+</MudDataGrid>
+
+
+@code {
+
+    private IEnumerable<Categoria> Elements = new List<Categoria>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Elements = await _categoriaService.GetAllCategoriasAsync();
+    }
+
+    private void OpenDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        Dialog.Show<CategoriasModal>();
+    }
+
+}
