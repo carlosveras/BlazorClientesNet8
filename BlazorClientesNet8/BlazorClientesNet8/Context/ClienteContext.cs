@@ -12,4 +12,10 @@ public class ClienteContext : DbContext
 
     public DbSet<Categoria> Categorias { get; set; }
 
+    public DbSet<Colaborador> Colaboradores { get; set; }
+    public DbSet<TipoContratacao> TiposContratacao { get; set; }
+
+    public DbSet<Departamento> Departamentos { get; set; }
+
+    public DbSet<Localidade> Localidades { get; set; }
 }

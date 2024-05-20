@@ -1,25 +1,29 @@
-﻿@page "/Colaboradores"
+﻿@page "/colaboradores"
 @using System.Net.Http.Json
 @inject HttpClient httpClient
 
 @rendermode InteractiveAuto
-
 
 <h1>COLABORADORES</h1>
 
 <a href="/" class="btn btn-primary">Voltar</a>
 <br ><br>
 
-<MudDataGrid Items="@Categorias" Filterable="false" SortMode="@SortMode.None" Groupable="false">
+<MudDataGrid Items="@Colabs" Filterable="false" SortMode="@SortMode.None" Groupable="false">
     <Columns>
-        <PropertyColumn Property="x => x.Id" />
-        <PropertyColumn Property="x => x.Nome" />
-        <PropertyColumn Property="x => x.PaginaDetalhes" Title="Years Employed" />
-        <PropertyColumn Property="x => x.TotalDaCategoria" Format="C" />
+        <PropertyColumn Property="x => x.NomeCompleto" Title="Colaborador" />
+        <PropertyColumn Property="x => x.DepartamentoId" Title="Departamento" />
+        <PropertyColumn Property="x => x.DataAdmissao" Title="Admissao" />
+        <PropertyColumn Property="x => x.Cargo" Title="Cargo" />
         <TemplateColumn CellClass="d-flex justify-end">
             <CellTemplate>
                 <MudStack Row>
                     <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary">Editar</MudButton>
+                </MudStack>
+            </CellTemplate>
+            <CellTemplate>
+                <MudStack Row>
+                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Surface">Requisicoes</MudButton>
                 </MudStack>
             </CellTemplate>
         </TemplateColumn>
@@ -27,22 +31,39 @@
 </MudDataGrid>
 
 @code {
-    private List<Categoria> Categorias { get; set; } = new();
+    // private IEnumerable<Colaborador> Elements = new List<Colaborador>();
 
-    private async Task CarregaCategorias()
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     Elements = await _colaboradorService.GetAllColaboradoresAsync();
+    // }
+
+
+    private List<Colaborador> Colabs { get; set; } = new();
+
+    private async Task CarregaColaboradores()
     {
-        var categorias = await _categoriaService.GetAllCategoriasAsync();
+        var colaboradors = await _colaboradorService.GetAllColaboradoresAsync();
 
-        Categorias?.Clear();
+        Colabs?.Clear();
 
-        if (Categorias is null) return;
+        if (Colabs is null) return;
 
-        foreach (var cliente in categorias)
-            Categorias.Add(cliente);
+        foreach (var colaborador in colaboradors)
+            Colabs.Add(colaborador);
     }
 
     protected override async Task OnInitializedAsync()
     {
-        await CarregaCategorias();
+        await CarregaColaboradores();
     }
+
+
+
+
+
+
+
+
+
 }

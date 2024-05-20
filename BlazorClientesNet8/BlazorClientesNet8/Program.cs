@@ -21,12 +21,21 @@ builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 
+builder.Services.AddScoped<IColaboradorRepository, ColaboradorRepository>();
+
+builder.Services.AddScoped<ITipoContratacaoRepository, TipoContratacaoRepository>();
+
+builder.Services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
+
+builder.Services.AddScoped<ILocalidadeRepository, LocalidadeRepository>();
+
+
 builder.Services.AddScoped(http => new HttpClient
 {
     BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value!)
 });
 
-builder.Services.AddMudServices().AddMudBlazorDialog();
+builder.Services.AddMudServices();
 
 var app = builder.Build();
 

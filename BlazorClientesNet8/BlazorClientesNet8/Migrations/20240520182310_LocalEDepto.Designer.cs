@@ -4,6 +4,7 @@ using BlazorClientesNet8.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorClientesNet8.Migrations
 {
     [DbContext(typeof(ClienteContext))]
-    partial class ClienteContextModelSnapshot : ModelSnapshot
+    [Migration("20240520182310_LocalEDepto")]
+    partial class LocalEDepto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,6 +109,9 @@ namespace BlazorClientesNet8.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ContratacaoId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DataAdmissao")
                         .HasColumnType("datetime2");
 
@@ -115,7 +121,7 @@ namespace BlazorClientesNet8.Migrations
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DepartamentoId")
+                    b.Property<int>("Departamento")
                         .HasColumnType("int");
 
                     b.Property<string>("EmailPessoal")
@@ -136,16 +142,7 @@ namespace BlazorClientesNet8.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TipoContratacaoId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartamentoId");
-
-                    b.HasIndex("LocalidadeId");
-
-                    b.HasIndex("TipoContratacaoId");
 
                     b.ToTable("Colaboradores");
                 });
@@ -208,33 +205,6 @@ namespace BlazorClientesNet8.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TiposContratacao");
-                });
-
-            modelBuilder.Entity("BlazorClientesNet8.Shared.Entities.Colaborador", b =>
-                {
-                    b.HasOne("BlazorClientesNet8.Shared.Entities.Departamento", "Departamento")
-                        .WithMany()
-                        .HasForeignKey("DepartamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BlazorClientesNet8.Shared.Entities.Localidade", "Localidade")
-                        .WithMany()
-                        .HasForeignKey("LocalidadeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BlazorClientesNet8.Shared.Entities.TipoContratacao", "TipoContratacao")
-                        .WithMany()
-                        .HasForeignKey("TipoContratacaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Departamento");
-
-                    b.Navigation("Localidade");
-
-                    b.Navigation("TipoContratacao");
                 });
 #pragma warning restore 612, 618
         }
