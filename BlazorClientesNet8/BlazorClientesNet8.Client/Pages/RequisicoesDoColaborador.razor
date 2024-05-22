@@ -1,13 +1,13 @@
-﻿@page "/Requisicoes"
+﻿@page "/requisicoesdocolaborador/{Id:int}"
 @using System.Net.Http.Json
 @inject HttpClient httpClient
 
 @rendermode InteractiveAuto
 
-<h1>REQUISICOES</h1>
+<h1>REQUISICOES DO COLABORADOR @Id</h1>
 
 <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary">Nova Requisicao</MudButton>
-<MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" Href="/">Voltar</MudButton>
+<MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" Href="/colaboradores">Voltar</MudButton>
 <br />
 <br />
 
@@ -93,3 +93,10 @@
         _events.Insert(0, $"Event = CommittedItemChanges, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
     }
 } *@ 
+
+<p>@Id</p>
+
+@code {
+    [Parameter]
+    public int Id { get; set; } 
+}

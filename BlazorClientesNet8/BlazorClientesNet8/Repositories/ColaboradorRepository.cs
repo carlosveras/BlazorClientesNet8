@@ -14,17 +14,13 @@ public class ColaboradorRepository : IColaboradorRepository
         _context = context;
     }
 
-    //public async Task<List<Colaborador>> GetAllColaboradoresAsync() =>
-    //                await _context.Colaboradores.ToListAsync();
-
+    
     public async Task<List<Colaborador>> GetAllColaboradoresAsync()
     {
-        var colaboradores = await _context.Colaboradores.ToListAsync();
+        var colaboradores = await _context.Colaboradores.Include(d => d.Departamento).ToListAsync();
         if (colaboradores is null) return null!;
         return colaboradores;
     }
-
-
 
     public async Task<Colaborador> GetColaboradorByIdAsync(int clienteId)
     {

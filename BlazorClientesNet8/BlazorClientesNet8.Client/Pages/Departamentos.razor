@@ -1,0 +1,59 @@
+﻿@page "/departamentos"
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+@inject IDialogService Dialog
+
+@rendermode InteractiveAuto
+
+<h1>DEPARTAMENTOS</h1>
+
+<MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" @onclick="OpenDialog">Novo Departamento</MudButton>
+<MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" Href="/">Voltar</MudButton>
+<br />
+<br />
+
+
+<MudDataGrid T="Departamento" Items="@Elements.Take(100)" Bordered="true" Dense="true">
+    <Columns>
+        <PropertyColumn Property="x => x.Id" Title="Nr" Hidden="true" />
+        <PropertyColumn Property="x => x.NomeDepartamento" />
+        <PropertyColumn Property="x => x.IsAtivo" Hidden="true" />
+        <TemplateColumn Title="Status">
+            <CellTemplate>
+                @if (context.Item.IsAtivo)
+                {
+                    <MudText>Ativo</MudText>
+                }
+                else
+                {
+                    <MudText>Inativo</MudText>
+                }
+            </CellTemplate>
+        </TemplateColumn>
+        <TemplateColumn>
+            <CellTemplate>
+                <MudStack Row>
+                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" @onclick="OpenDialog">Editar</MudButton>
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+</MudDataGrid>
+
+
+@code {
+
+    private IEnumerable<Departamento> Elements = new List<Departamento>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Elements = await _departamentoService.GetAllDepartamentosAsync();
+    }
+
+    private void OpenDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        Dialog.Show<Dialog>();
+    }
+
+}

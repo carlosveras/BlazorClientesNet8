@@ -1,10 +1,11 @@
 using BlazorClientesNet8.Client.Pages;
-using BlazorClientesNet8.Components;
+using BlazorClientesNet8;
 using BlazorClientesNet8.Context;
 using BlazorClientesNet8.Repositories;
 using BlazorClientesNet8.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
+using BlazorClientesNet8.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +58,7 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Counter).Assembly);
+    //.AddAdditionalAssemblies(typeof(Counter).Assembly);
+    .AddAdditionalAssemblies(typeof(BlazorClientesNet8.Client._Imports).Assembly);
 
 app.Run();

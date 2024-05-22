@@ -17,6 +17,16 @@ public class ColaboradorService : IColaboradorRepository
             PropertyNameCaseInsensitive = true 
         };
     }
+
+
+    public async Task<List<Colaborador>> GetAllColaboradoresAsync()
+    {
+        var colaboradores = await httpClient.GetAsync("api/Colaborador/Colaboradores");
+        var response = await colaboradores.Content.ReadFromJsonAsync<List<Colaborador>>();
+        return response!;
+    }
+
+
     public async Task<Colaborador> AddColaboradorAsync(Colaborador model)
     {
         var colaborador = await httpClient.PostAsJsonAsync("api/Colaborador/Add-Colaborador", model);
@@ -28,13 +38,6 @@ public class ColaboradorService : IColaboradorRepository
     {
         var colaborador = await httpClient.DeleteAsync($"api/Cliente/Delete-Colaborador/{colaboradorId}");
         var response = await colaborador.Content.ReadFromJsonAsync<Colaborador>();
-        return response!;
-    }
-
-    public async Task<List<Colaborador>> GetAllColaboradoresAsync()
-    {
-        var colaboradores = await httpClient.GetAsync("api/Colaborador/Colaboradores");
-        var response = await colaboradores.Content.ReadFromJsonAsync<List<Colaborador>>();
         return response!;
     }
 

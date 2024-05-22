@@ -1,4 +1,4 @@
-﻿@page "/colaboradores"
+﻿@page "/testagrid"
 @using System.Net.Http.Json
 @inject HttpClient httpClient
 @inject IDialogService Dialog
@@ -38,8 +38,9 @@
         <MudIconButton Icon="@Icons.Material.Filled.Person" Title="DETALHES" Variant="Variant.Outlined" Color="Color.Secondary" Size="Size.Small" />
         <MudIconButton Icon="@Icons.Material.Filled.PersonRemove" Title="DEMITIR" Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Small" />
         <MudIconButton Icon="@Icons.Material.Filled.AddChart" Title="REQUISICOES" Variant="Variant.Outlined" Color="Color.Success" Size="Size.Small" HRef="@($"/requisicoesdocolaborador/{context.Id}")" />
-    </RowTemplate>
 
+    </RowTemplate>
+   
 
     <NoRecordsContent>
         <MudText>No matching records found</MudText>
