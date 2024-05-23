@@ -4,7 +4,7 @@
 
 @rendermode InteractiveAuto
 
-<MudDialog>
+<MudDialog >
     <DialogContent>
         <MudText>NOVO COLABORADOR</MudText>
     </DialogContent>
@@ -14,8 +14,13 @@
     </DialogActions>
 </MudDialog>
 
+
+
 @code {
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [CascadingParameter] 
+    MudDialogInstance MudDialog { get; set; }
+
+    
 
     // [Parameter] public string ContentText { get; set; }
 

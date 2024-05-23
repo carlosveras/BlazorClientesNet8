@@ -1,20 +1,48 @@
 ﻿@page "/testagrid"
+
 @using System.Net.Http.Json
 @inject HttpClient httpClient
-@inject IDialogService Dialog
+@inject IDialogService DialogService
 
-@rendermode InteractiveAuto
+@* @rendermode InteractiveAuto *@
+@rendermode InteractiveServer
 
-<h1>COLABORADORES</h1>
+<h1>COLABORADORES TESTA GRID</h1>
 <br />
 
-<MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary">Novo Colaborador</MudButton>
+<style>
+
+    .tooltip .tooltipazul {
+        visibility: hidden;
+        display: block;
+        text-align: center;
+        position: absolute;
+        text-align: center;
+        background-color: green;
+        color: white;
+        padding: 5px;
+        border-radius: 5px;
+        z-index: 10;
+    }
+
+
+    .tooltip:hover .tooltipazul {
+        visibility: visible;
+    }
+</style>
+
+
+<MudDialogProvider Position="DialogPosition.Center" />
+
+<MudButton Size="@Size.Small" @onclick="Abrir" Variant="Variant.Filled" Color="Color.Primary">Novo Colaborador</MudButton>
 <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" Href="/">Voltar</MudButton>
+
+
 <br />
 <br />
 
 <MudTable ServerData="@(new Func<TableState, Task<TableData<Colaborador>>>(ServerReload))"
-          Dense="true" Hover="true" @ref="table">
+          Dense="true" @ref="table" Hover="true" Breakpoint="Breakpoint.Sm">
     <ToolBarContent>
 
         <MudSpacer />
@@ -29,18 +57,22 @@
 
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="nome">@context.NomeCompleto</MudTd>
+
+
+        <MudTooltip Class="mud-tooltip mud-tooltip-default tooltipazul" Placement="Placement.Top">
+            <MudTd DataLabel="nome">@context.NomeCompleto</MudTd>
+        </MudTooltip>
         <MudTd DataLabel="departamento">@context.Departamento.NomeDepartamento</MudTd>
         <MudTd DataLabel="admissao">@context.DataAdmissao.ToShortDateString()</MudTd>
         <MudTd DataLabel="cargo">@context.Cargo</MudTd>
 
         <MudIconButton Icon="@Icons.Material.Filled.AddChart" Title="EDITAR" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" />
         <MudIconButton Icon="@Icons.Material.Filled.Person" Title="DETALHES" Variant="Variant.Outlined" Color="Color.Secondary" Size="Size.Small" />
-        <MudIconButton Icon="@Icons.Material.Filled.PersonRemove" Title="DEMITIR" Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Small" />
+        <MudIconButton Icon="@Icons.Material.Filled.PersonRemove" Title="DEMITIR" Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Small" OnClick="@((e)=> Demitir(context.Id))" />
         <MudIconButton Icon="@Icons.Material.Filled.AddChart" Title="REQUISICOES" Variant="Variant.Outlined" Color="Color.Success" Size="Size.Small" HRef="@($"/requisicoesdocolaborador/{context.Id}")" />
-
+        <MudIconButton Icon="@Icons.Material.Filled.PersonAddDisabled" Title="DESABILITAR" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Small" OnClick="@((e)=> Desabilitar(context.Id))" />
     </RowTemplate>
-   
+
 
     <NoRecordsContent>
         <MudText>No matching records found</MudText>
@@ -53,6 +85,12 @@
     </PagerContent>
 </MudTable>
 
+<MudText>Currently hovered: @(currentlyHoveredElement)</MudText>
+
+<MudTooltip Text="Secondary" Color="Color.Secondary" Placement="Placement.Top">
+    <MudButton>Currently hovered: @(currentlyHoveredElement)</MudButton>
+</MudTooltip>
+
 @code {
     private IEnumerable<Colaborador> pagedData;
     private MudTable<Colaborador> table;
@@ -60,6 +98,9 @@
     private string abcd = null;
     private int totalItems;
     private string searchString = null;
+
+    private string currentlyHoveredElement;
+    private string lastHoveredElement;
 
     private async Task<TableData<Colaborador>> ServerReload(TableState state)
     {
@@ -102,9 +143,52 @@
         return new TableData<Colaborador>() { TotalItems = totalItems, Items = pagedData };
     }
 
+    private void OpenDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        DialogService.Show<Dialog>("Simple Dialog", options);
+    }
     private void OnSearch(string text)
     {
         searchString = text;
         table.ReloadServerData();
     }
+
+    private void Abrir()
+    {
+        var parameters = new DialogParameters<CadastrarColaborador>();
+
+        DialogService.Show<CadastrarColaborador>();
+
+    }
+
+    private void Desabilitar(int colaboradorId)
+    {
+        var parameters = new DialogParameters<DesabilitarColaborador>();
+        parameters.Add(x => x.colaboradorId, colaboradorId);
+
+        DialogService.Show<DesabilitarColaborador>("", parameters);
+
+    }
+
+    private void Demitir(int colaboradorId)
+    {
+        var parameters = new DialogParameters<Colabs.DemitirColaborador>();
+        parameters.Add(x => x.colaboradorId, colaboradorId);
+
+        DialogService.Show<Colabs.DemitirColaborador>("", parameters);
+    }
+
+    public void RowMouseEnterEvent(TableRowHoverEventArgs<Colaborador> eventArgs)
+    {
+        currentlyHoveredElement = eventArgs.Item.Id.ToString();
+    }
+
+
+    private void RowMouseLeaveEvent(TableRowHoverEventArgs<Colaborador> eventArgs)
+    {
+        currentlyHoveredElement = "";
+        lastHoveredElement = eventArgs.Item.Id.ToString();
+    }
+
 }

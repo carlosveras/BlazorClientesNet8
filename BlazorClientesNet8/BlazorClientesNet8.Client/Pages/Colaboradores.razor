@@ -9,10 +9,11 @@
 <h1>COLABORADORES</h1>
 <br />
 
+<MudDialogProvider Position="DialogPosition.Center" />
+
 <MudButton Size="@Size.Small" @onclick="Abrir" Variant="Variant.Filled" Color="Color.Primary">Novo Colaborador</MudButton>
 <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" Href="/">Voltar</MudButton>
 
-<MudDialogProvider />
 
 <br />
 <br />
@@ -33,7 +34,7 @@
 
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="nome">@context.NomeCompleto</MudTd>
+        <MudTd DataLabel="nome">@context.NomeCompleto</MudTd> 
         <MudTd DataLabel="departamento">@context.Departamento.NomeDepartamento</MudTd>
         <MudTd DataLabel="admissao">@context.DataAdmissao.ToShortDateString()</MudTd>
         <MudTd DataLabel="cargo">@context.Cargo</MudTd>
@@ -109,7 +110,7 @@
     private void OpenDialog()
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        //DialogService.Show<Dialog>("Simple Dialog", options);
+        DialogService.Show<Dialog>("Simple Dialog", options);
     }
     private void OnSearch(string text)
     {
@@ -120,6 +121,7 @@
     private void Abrir()
     {
         var parameters = new DialogParameters<CadastrarColaborador>();
+
         DialogService.Show<CadastrarColaborador>();
 
     }
@@ -143,5 +145,5 @@
 
 
 
-    
+
 }

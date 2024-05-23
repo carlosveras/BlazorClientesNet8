@@ -1,0 +1,202 @@
+﻿@page "/testandogrid"
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+
+@rendermode InteractiveServer
+
+<style>
+/* 
+.tooltip {
+    position: absolute;
+    display: none;
+    background-color: red;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 10;
+}
+
+.tooltip:hover {
+    display: block;
+} */
+    .tooltip .tooltiptext {
+        /*  visibility: hidden;
+            display: block;
+            text-align: center;
+            position: absolute; */
+        position: absolute;
+        text-align: center;
+        background-color: green;
+        color: white;
+        padding: 5px; 
+        border-radius: 5px;
+        z-index: 10;
+        visibility: hidden;
+    }
+
+    .tooltip .tooltipazul {
+        position: absolute;
+        text-align: center;
+        background-color: blue;
+        color: white;
+        border-radius: 5px;
+        z-index: 10;
+        visibility: hidden;
+    }
+
+    .tooltip .tooltipamarelo {
+        position: absolute;
+        text-align: center;
+        background-color: yellow;
+        color: white;
+        border-radius: 5px;
+        z-index: 10;
+        visibility: hidden;
+    }
+
+
+    .tooltipcustom .tooltipvermelho {
+       /*  visibility: hidden;
+        display: block;
+        text-align: center;
+        position: absolute; */
+        position: absolute;
+        text-align: center;
+        background-color: red;
+        color: white;
+        /* padding: 5px; */
+        border-radius: 5px;
+        z-index: 10;
+        visibility: hidden;
+    }
+
+    .tooltip .verde {
+        /*  visibility: hidden;
+            display: block;
+            text-align: center;
+            position: absolute; */
+        position: absolute;
+        text-align: center;
+        background-color: green;
+        color: white;
+        /* padding: 5px; */
+        border-radius: 5px;
+        z-index: 10;
+        visibility: hidden;
+    }
+
+
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+
+    .tooltip:hover .tooltipazul {
+        visibility: visible;
+    }
+
+    .tooltip:hover .tooltipamarelo {
+        visibility: visible;
+    }
+
+    .onlyForDemo-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 125px;
+        margin-top: 100px;
+    }
+</style>
+<br />
+<br />
+<br />
+<br />
+<br />
+<MudTooltip Text="Secondary" Color="Color.Secondary" Placement="Placement.Top" @onmouseleave="HandleMouseLeave" @onmouseenter="HandleMouseEnter"
+            Class="mud-tooltip mud-tooltip-default">
+    <MudButton>Secondary</MudButton>
+</MudTooltip>
+<MudTooltip Text="Tertiary" Color="Color.Tertiary" Placement="Placement.Bottom" Arrow="true">
+    <MudButton>Tertiary</MudButton>
+</MudTooltip>
+<MudTooltip Text="Primary" Color="Color.Primary" Placement="Placement.Top">
+    <MudButton>Primary</MudButton>
+</MudTooltip>
+
+
+<MudTooltip Text="VERDE" Color="Color.Secondary" Placement="Placement.Top" Class="mud-tooltip mud-tooltip-default tooltiptext">
+    <MudButton Class="mud-tooltip mud-tooltip-default tooltiptext">VERDA0...</MudButton>
+</MudTooltip>
+
+<br />
+<br />
+
+
+<!-- Creating own tooltip -->
+<MudText Typo="Typo.body1" class="tooltip">
+    Creating own tooltip
+    <MudLink Href="#" Class="mud-tooltip mud-tooltip-default tooltiptext">
+       MUDLINK VERDE
+    </MudLink>
+</MudText>
+
+<br />
+<br />
+<br />
+
+<!-- Creating own tooltip -->
+
+
+<br />
+<br />
+<br />
+<!-- Creating own tooltip -->
+<MudText Typo="Typo.body1" class="tooltip" >
+    Creating own tooltip
+    <MudButton Class="mud-tooltip mud-tooltip-default tooltipazul" Placement="Placement.Top">
+        MUDBUTTON AZUL
+    </MudButton>
+</MudText>
+<br />
+<br />
+<br />
+<!-- Creating own tooltip -->
+<MudText Typo="Typo.body1" class="tooltip">
+    Creating own tooltip
+    <MudButton Class="mud-tooltip mud-tooltip-default tooltipazul">
+        MUDBUTTON AZUL
+    </MudButton>
+</MudText>
+<br />
+<br />
+<br />
+<MudTooltip Text="Secondary" Placement="Placement.Top" class="tooltip">
+    <MudButton Class="mud-tooltip mud-tooltip-default tooltipamarelo"> MUDBUTTON AMARELO</MudButton>
+</MudTooltip>
+<br />
+<br />
+<br />
+<MudTooltip Text="Secondary" Placement="Placement.Top">
+    <MudButton Class="mud-tooltip mud-tooltip-default tooltipazul" Placement="Placement.Top">
+        MUDBUTTON AZUL
+    </MudButton>
+</MudTooltip>
+
+
+@code {
+    bool showTooltip = false;
+
+    void HandleChange(bool newValue)
+    {
+        // do nothing to override the default implementation
+        //showTooltip=newValue;
+    }
+    void HandleMouseLeave()
+    {
+        showTooltip = false;
+    }
+    void HandleMouseEnter()
+    {
+        showTooltip = true;
+    }
+}
