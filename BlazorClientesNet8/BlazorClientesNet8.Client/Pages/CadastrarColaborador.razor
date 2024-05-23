@@ -1,0 +1,28 @@
+﻿@page "/cadastrarcolaborador"
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+
+@rendermode InteractiveAuto
+
+<MudDialog>
+    <DialogContent>
+        <MudText>NOVO COLABORADOR</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Size="@Size.Small" Variant="Variant.Filled" OnClick="Cancel" Color="Color.Error">Cancel</MudButton>
+        <MudButton Size="@Size.Small" Variant="Variant.Filled" OnClick="Submit" Color="Color.Success">Salvar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    // [Parameter] public string ContentText { get; set; }
+
+    // [Parameter] public string ButtonText { get; set; }
+
+    // [Parameter] public Color Color { get; set; }
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+}

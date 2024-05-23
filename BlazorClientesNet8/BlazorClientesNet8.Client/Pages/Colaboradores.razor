@@ -1,15 +1,19 @@
 ﻿@page "/colaboradores"
 @using System.Net.Http.Json
 @inject HttpClient httpClient
-@inject IDialogService Dialog
+@inject IDialogService DialogService
 
-@rendermode InteractiveAuto
+@* @rendermode InteractiveAuto *@
+@rendermode InteractiveServer
 
 <h1>COLABORADORES</h1>
 <br />
 
-<MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary">Novo Colaborador</MudButton>
+<MudButton Size="@Size.Small" @onclick="Abrir" Variant="Variant.Filled" Color="Color.Primary">Novo Colaborador</MudButton>
 <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" Href="/">Voltar</MudButton>
+
+<MudDialogProvider />
+
 <br />
 <br />
 
@@ -38,6 +42,7 @@
         <MudIconButton Icon="@Icons.Material.Filled.Person" Title="DETALHES" Variant="Variant.Outlined" Color="Color.Secondary" Size="Size.Small" />
         <MudIconButton Icon="@Icons.Material.Filled.PersonRemove" Title="DEMITIR" Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Small" />
         <MudIconButton Icon="@Icons.Material.Filled.AddChart" Title="REQUISICOES" Variant="Variant.Outlined" Color="Color.Success" Size="Size.Small" HRef="@($"/requisicoesdocolaborador/{context.Id}")" />
+        <MudIconButton Icon="@Icons.Material.Filled.PersonAddDisabled" Title="DESABILITAR" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Small" OnClick="@((e)=> Desabilitar(context.Id))" />
     </RowTemplate>
 
 
@@ -101,9 +106,37 @@
         return new TableData<Colaborador>() { TotalItems = totalItems, Items = pagedData };
     }
 
+    private void OpenDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        //DialogService.Show<Dialog>("Simple Dialog", options);
+    }
     private void OnSearch(string text)
     {
         searchString = text;
         table.ReloadServerData();
     }
+
+    private void Abrir()
+    {
+        var parameters = new DialogParameters<CadastrarColaborador>();
+        //parameters.Add(x => x.ContentText, "Teste do HawkID");
+        //parameters.Add(x => x.ButtonText, "Yes");
+        //parameters.Add(x => x.Color, Color.Success);
+
+        DialogService.Show<CadastrarColaborador>();
+
+    }
+
+    private void Desabilitar(int colaboradorId)
+    {
+        var parameters = new DialogParameters<DesabilitarColaborador>();
+        DialogService.Show<DesabilitarColaborador>();
+
+    }
+
+
+
+
+    
 }

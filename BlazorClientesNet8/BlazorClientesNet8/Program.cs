@@ -1,5 +1,3 @@
-using BlazorClientesNet8.Client.Pages;
-using BlazorClientesNet8;
 using BlazorClientesNet8.Context;
 using BlazorClientesNet8.Repositories;
 using BlazorClientesNet8.Shared.Interfaces;
