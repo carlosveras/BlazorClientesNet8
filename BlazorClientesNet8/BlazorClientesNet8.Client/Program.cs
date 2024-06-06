@@ -21,7 +21,9 @@ builder.Services.AddScoped<IDepartamentoRepository, DepartamentoService>();
 
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddMudServices().AddMudBlazorDialog();
+builder.Services.AddMudServices().AddMudBlazorDialog().AddMudPopoverService();
+
+
 
 builder.Services.AddScoped(http => new HttpClient
 {

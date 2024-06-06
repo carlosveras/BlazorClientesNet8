@@ -45,3 +45,14 @@ h1:focus {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.tenda-nav {
+    background-color: #ed1c24;
+}
+
+/* styles.css */
+.container-fluid {
+    margin-top: 20px; /* Adjust the 'top' margin value as needed */
+    margin-left: 90px; /* Adjust the 'left' margin value as needed */
+}
+

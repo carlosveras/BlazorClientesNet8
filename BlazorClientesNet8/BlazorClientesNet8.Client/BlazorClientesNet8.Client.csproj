@@ -17,4 +17,13 @@
     <ProjectReference Include="..\..\BlazorClientesNet8.Shared\BlazorClientesNet8.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Pages\AdmitidosHojeClt.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Pages\DemitidosNoMes.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
 </Project>

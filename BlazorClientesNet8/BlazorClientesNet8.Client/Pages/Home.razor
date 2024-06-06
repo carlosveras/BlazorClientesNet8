@@ -2,20 +2,26 @@
 
 @rendermode InteractiveServer
 
-
 <div style="display: flex; flex-wrap: wrap;">
     @foreach (var item in Categorias.Where(p => p.Status == true))
     {
         <div style="flex: 1; margin: 10px;">
             <MudCard>
-                <MudCardHeader Class="bold-total" >
-                    <CardHeaderContent >
+                <MudCardHeader Class="bold-total">
+                    <CardHeaderContent>
                         <MudText Typo="Typo.h6">@item.Nome</MudText>
                     </CardHeaderContent>
                 </MudCardHeader>
-                <MudCardContent>
-                    <MudText Class="bold-total">@item.TotalDaCategoria.ToString()</MudText>
-                </MudCardContent>
+                @if (item.Nome == "Usuarios")
+                {
+                    <MudCardContent>
+                        <MudButton Color="Color.Primary" Href="@item.PaginaDetalhes">Usuarios CLT HOJE @item.TotalUsersCltToday.ToString()</MudButton>
+                        <MudButton Color="Color.Success" Href="/admitidoshojeclt">Usuarios CLT Admitidos HOJE @item.TotalUsersCltAdmittedOnDay.ToString()</MudButton>
+                        <MudButton Color="Color.Error" Href="/demitidoshojeclt">Usuarios CLT Desligados HOJE @item.TotalUsersCltFiredOnDay.ToString()</MudButton>
+                        <MudButton Color="Color.Error" Href="/demitidosnomes">Usuarios Desligados Neste Mes @item.TotalUsersFiredOnMonth</MudButton>
+                    </MudCardContent>
+                }
+
                 <MudCardActions>
                     <MudButton Variant="Variant.Text" Color="Color.Primary" Href="@item.PaginaDetalhes">Detalhes</MudButton>
                 </MudCardActions>

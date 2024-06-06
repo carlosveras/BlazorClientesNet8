@@ -22,6 +22,20 @@ public class ColaboradorController : ControllerBase
         return Ok(colaboradores);
     }
 
+    [HttpGet("ColaboradoresDemitidosHoje")]
+    public async Task<ActionResult<List<Colaborador>>> GetAllColaboradoresCltFiredTodayAsync()
+    {
+        var colaboradores = await _colaboradorRepository.GetAllColaboradoresCltFiredTodayAsync();
+        return Ok(colaboradores);
+    }
+
+    [HttpGet("ColaboradoresAdmitidosHoje")]
+    public async Task<ActionResult<List<Colaborador>>> GetAllColaboradoresCltAdmittedTodayAsync()
+    {
+        var colaboradores = await _colaboradorRepository.GetAllColaboradoresCltAdmittedTodayAsync();
+        return Ok(colaboradores);
+    }
+
     [HttpGet("Colaborador/{id}")]
     public async Task<ActionResult<List<Colaborador>>> GetSingleColaboradorAsync(int id)
     {

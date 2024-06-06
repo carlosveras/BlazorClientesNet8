@@ -26,6 +26,29 @@ public class ColaboradorService : IColaboradorRepository
         return response!;
     }
 
+    public async Task<List<Colaborador>> GetAllColaboradoresCltFiredTodayAsync()
+    {
+        var colaboradores = await httpClient.GetAsync("api/Colaborador/ColaboradoresDemitidosHoje");
+        var response = await colaboradores.Content.ReadFromJsonAsync<List<Colaborador>>();
+        return response!;
+    }
+
+    public async Task<List<Colaborador>> GetAllColaboradoresCltAdmittedTodayAsync()
+    {
+        var colaboradores = await httpClient.GetAsync("api/Colaborador/ColaboradoresAdmitidosHoje");
+        var response = await colaboradores.Content.ReadFromJsonAsync<List<Colaborador>>();
+        return response!;
+    }
+
+    //GetAllColaboradoresFiredOnMonthAsync
+    public async Task<List<Colaborador>> GetAllColaboradoresFiredOnMonthAsync()
+    {
+        var colaboradores = await httpClient.GetAsync("api/Colaborador/ColaboradoresDemitidosNoMes");
+        var response = await colaboradores.Content.ReadFromJsonAsync<List<Colaborador>>();
+        return response!;
+    }
+
+
 
     public async Task<Colaborador> AddColaboradorAsync(Colaborador model)
     {

@@ -16,4 +16,20 @@ public class Categoria
     public string PaginaDetalhes {  get; set; } = string.Empty;
 
     public bool Status {  get; set; }
+
+    public int TotalUsersCltToday { get; init; }
+
+    public int TotalUsersCltAdmittedOnDay { get; init; }
+
+    public int TotalUsersCltFiredOnDay { get; init; }
+
+    public int TotalUsersPjToday { get; init; }
+
+    public int TotalUsersPjAdmittedOnDay { get; init; }
+
+    public int TotalUsersPjFiredOnDay { get; init; }
+
+    public int TotalUsersFiredOnMonth { get; init; }
+
+    public int TotalUsersInCompany { get; init; }
 }

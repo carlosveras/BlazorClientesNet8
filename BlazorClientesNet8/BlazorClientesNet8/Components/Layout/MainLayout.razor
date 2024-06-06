@@ -1,13 +1,13 @@
 ﻿@using MudBlazor
 @inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
+<div class="page" >
+    <div class="sidebar" style="background-color: #ED1C24;">
         <NavMenu />
     </div>
 
     <main>
-        <div class="top-row px-4">
+        <div class="top-row px-4" style="background-color: #ED1C24;">
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
 
@@ -22,7 +22,11 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+<!--<script src="_framework/blazor.webassembly.js"></script>-->
+<script src="_content/MudBlazor/MudBlazor.min.js"></script>
+
 
 <MudThemeProvider/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
+<MudPopoverProvider />

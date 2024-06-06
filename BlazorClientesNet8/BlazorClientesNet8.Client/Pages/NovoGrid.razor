@@ -1,0 +1,101 @@
+﻿@page "/novogrid"
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+
+@rendermode InteractiveServer
+<MudPopoverProvider />
+
+<MudDataGrid Items="@Elements">
+    <Columns>
+         <TemplateColumn>
+            <HeaderTemplate>
+                Header template title for <u>NOME</u>
+            </HeaderTemplate>
+            <CellTemplate>
+                <MudTooltip Text="TESTE" Color="Color.Secondary" Placement="Placement.Top">
+                    @context.Item.NomeCompleto
+                </MudTooltip>
+            </CellTemplate>
+        </TemplateColumn>
+        <TemplateColumn>
+            <HeaderTemplate>
+                Header template title for <u>CARGO</u>
+            </HeaderTemplate>
+            <CellTemplate>
+                <MudTooltip Text="@context.Item.Cargo" Color="Color.Secondary" Placement="Placement.Top">
+                    @context.Item.Cargo
+                </MudTooltip>
+            </CellTemplate>
+        </TemplateColumn>
+
+    </Columns>
+</MudDataGrid>
+
+@code {
+    private IEnumerable<Colaborador> pagedData;
+    private MudTable<Colaborador> table;
+
+    private string abcd = null;
+    private int totalItems;
+    private string searchString = null;
+
+    private string currentlyHoveredElement;
+    private string lastHoveredElement;
+
+    private IEnumerable<Colaborador> Elements = new List<Colaborador>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Elements = await _colaboradorService.GetAllColaboradoresCltAdmittedTodayAsync();
+    }
+
+
+    // private void OpenDialog()
+    // {
+    //     var options = new DialogOptions { CloseOnEscapeKey = true };
+    //     DialogService.Show<Dialog>("Simple Dialog", options);
+    // }
+    private void OnSearch(string text)
+    {
+        searchString = text;
+        table.ReloadServerData();
+    }
+
+    // private void Abrir()
+    // {
+    //     var parameters = new DialogParameters<CadastrarColaborador>();
+
+    //     DialogService.Show<CadastrarColaborador>();
+
+    // }
+
+    // private void Desabilitar(int colaboradorId)
+    // {
+    //     var parameters = new DialogParameters<DesabilitarColaborador>();
+    //     parameters.Add(x => x.colaboradorId, colaboradorId);
+
+    //     DialogService.Show<DesabilitarColaborador>("", parameters);
+
+    // }
+
+    // private void Demitir(int colaboradorId)
+    // {
+    //     var parameters = new DialogParameters<Colabs.DemitirColaborador>();
+    //     parameters.Add(x => x.colaboradorId, colaboradorId);
+
+    //     DialogService.Show<Colabs.DemitirColaborador>("", parameters);
+    // }
+
+    // public void RowMouseEnterEvent(TableRowHoverEventArgs<Colaborador> eventArgs)
+    // {
+    //     currentlyHoveredElement = eventArgs.Item.Id.ToString();
+    // }
+
+
+    // private void RowMouseLeaveEvent(TableRowHoverEventArgs<Colaborador> eventArgs)
+    // {
+    //     currentlyHoveredElement = "";
+    //     lastHoveredElement = eventArgs.Item.Id.ToString();
+    // }
+
+}

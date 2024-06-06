@@ -34,7 +34,10 @@ builder.Services.AddScoped(http => new HttpClient
     BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value!)
 });
 
-builder.Services.AddMudServices();
+//builder.Services.AddMudServices();
+builder.Services.AddMudServices().AddMudBlazorDialog().AddMudPopoverService();
+
+
 
 var app = builder.Build();
 

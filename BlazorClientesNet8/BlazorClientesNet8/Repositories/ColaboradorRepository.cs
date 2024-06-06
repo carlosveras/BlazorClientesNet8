@@ -14,13 +14,59 @@ public class ColaboradorRepository : IColaboradorRepository
         _context = context;
     }
 
-    
+
     public async Task<List<Colaborador>> GetAllColaboradoresAsync()
     {
         var colaboradores = await _context.Colaboradores.Include(d => d.Departamento).ToListAsync();
         if (colaboradores is null) return null!;
         return colaboradores;
     }
+
+
+    public async Task<List<Colaborador>> GetAllColaboradoresCltFiredTodayAsync()
+    {
+        var colaboradores = await _context.Colaboradores
+                                          .Where(d => d.DataFinal.Date == DateTime.Now.Date)
+                                          .Where(c => c.TipoContratacaoId == 1)
+                                          .Include(d => d.Departamento).ToListAsync();
+
+        if (colaboradores is null) return null!;
+        return colaboradores;
+    }
+
+    public async Task<List<Colaborador>> GetAllColaboradoresFiredOnMonthAsync()
+    {
+
+
+        var colaboradores = await _context.Colaboradores
+                                          .Where(d => d.DataFinal.Month == DateTime.Now.Month)
+                                          .Include(d => d.Departamento).ToListAsync();
+
+        if (colaboradores is null) return null!;
+        return colaboradores;
+    }
+
+
+
+
+
+
+
+
+
+
+    public async Task<List<Colaborador>> GetAllColaboradoresCltAdmittedTodayAsync()
+    {
+        var colaboradores = await _context.Colaboradores
+                                          .Where(d => d.DataAdmissao.Date == DateTime.Now.Date)
+                                          .Where(c => c.TipoContratacaoId == 1)
+                                          .Include(d => d.Departamento).ToListAsync();
+
+        if (colaboradores is null) return null!;
+        return colaboradores;
+    }
+
+
 
     public async Task<Colaborador> GetColaboradorByIdAsync(int clienteId)
     {

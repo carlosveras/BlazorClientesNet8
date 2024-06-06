@@ -6,12 +6,12 @@
 @* @rendermode InteractiveAuto *@
 @rendermode InteractiveServer
 
-<h1>COLABORADORES</h1>
+<h1>USUARIOS</h1>
 <br />
 
 <MudDialogProvider Position="DialogPosition.Center" />
 
-<MudButton Size="@Size.Small" @onclick="Abrir" Variant="Variant.Filled" Color="Color.Primary">Novo Colaborador</MudButton>
+<MudButton Size="@Size.Small" @onclick="Abrir" Variant="Variant.Filled" Color="Color.Primary">Novo Usuario</MudButton>
 <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" Href="/">Voltar</MudButton>
 
 
@@ -41,9 +41,9 @@
 
         <MudIconButton Icon="@Icons.Material.Filled.AddChart" Title="EDITAR" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" />
         <MudIconButton Icon="@Icons.Material.Filled.Person" Title="DETALHES" Variant="Variant.Outlined" Color="Color.Secondary" Size="Size.Small" />
+        <MudIconButton Icon="@Icons.Material.Filled.PersonAddDisabled" Title="DESABILITAR" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Small" OnClick="@((e)=> Desabilitar(context.Id))" />
         <MudIconButton Icon="@Icons.Material.Filled.PersonRemove" Title="DEMITIR" Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Small" OnClick="@((e)=> Demitir(context.Id))" />
         <MudIconButton Icon="@Icons.Material.Filled.AddChart" Title="REQUISICOES" Variant="Variant.Outlined" Color="Color.Success" Size="Size.Small" HRef="@($"/requisicoesdocolaborador/{context.Id}")" />
-        <MudIconButton Icon="@Icons.Material.Filled.PersonAddDisabled" Title="DESABILITAR" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Small" OnClick="@((e)=> Desabilitar(context.Id))" />
     </RowTemplate>
 
 

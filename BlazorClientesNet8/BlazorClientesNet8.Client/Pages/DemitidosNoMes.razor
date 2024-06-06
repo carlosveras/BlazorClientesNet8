@@ -1,40 +1,16 @@
-﻿@page "/testagrid"
-
+﻿@page "/demitidosnomes"
 @using System.Net.Http.Json
 @inject HttpClient httpClient
 @inject IDialogService DialogService
 
-@* @rendermode InteractiveAuto *@
 @rendermode InteractiveServer
 
-<h1>COLABORADORES TESTA GRID</h1>
+<h1>Usuarios Desligados Neste Mes</h1>
 <br />
-
-<style>
-
-    .tooltip .tooltipazul {
-        visibility: hidden;
-        display: block;
-        text-align: center;
-        position: absolute;
-        text-align: center;
-        background-color: green;
-        color: white;
-        padding: 5px;
-        border-radius: 5px;
-        z-index: 10;
-    }
-
-
-    .tooltip:hover .tooltipazul {
-        visibility: visible;
-    }
-</style>
-
-
 <MudDialogProvider Position="DialogPosition.Center" />
 
-<MudButton Size="@Size.Small" @onclick="Abrir" Variant="Variant.Filled" Color="Color.Primary">Novo Colaborador</MudButton>
+
+<MudButton Size="@Size.Small" @onclick="Abrir" Variant="Variant.Filled" Color="Color.Primary">Desligar Usuario</MudButton>
 <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" Href="/">Voltar</MudButton>
 
 
@@ -42,7 +18,7 @@
 <br />
 
 <MudTable ServerData="@(new Func<TableState, Task<TableData<Colaborador>>>(ServerReload))"
-          Dense="true" @ref="table" Hover="true" Breakpoint="Breakpoint.Sm">
+          Dense="true" Hover="true" @ref="table">
     <ToolBarContent>
 
         <MudSpacer />
@@ -52,55 +28,18 @@
     <HeaderContent>
         <MudTh><MudTableSortLabel SortLabel="nome" T="Colaborador">Nome</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortLabel="departamento" T="Colaborador">Departamento</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="admissao" T="Colaborador">Admissao</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="demissao" T="Colaborador">Demissao</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortLabel="cargo" T="Colaborador">Cargo</MudTableSortLabel></MudTh>
 
     </HeaderContent>
     <RowTemplate>
-
-       
-@* 
-        <TemplateColumn >
-            <HeaderTemplate>
-                Header template title for <u>Nome</u>
-            </HeaderTemplate>
-            <CellTemplate>
-                <MudTooltip Text="@context.NomeCompleto" Color="Color.Primary" Placement="Placement.Right">
-                    @context.Item.NomeCompleto
-                </MudTooltip>
-            </CellTemplate>
-        </TemplateColumn>
- *@
-
-        @*  <MudTd DataLabel="nome" Title="@context.Id">@context.NomeCompleto</MudTd> *@
+        <MudTd DataLabel="nome">@context.NomeCompleto</MudTd> 
         <MudTd DataLabel="departamento">@context.Departamento.NomeDepartamento</MudTd>
-        <MudTd DataLabel="admissao">@context.DataAdmissao.ToShortDateString()</MudTd>
+        <MudTd DataLabel="demissao">@context.DataFinal.ToShortDateString()</MudTd>
         <MudTd DataLabel="cargo">@context.Cargo</MudTd>
 
-        <MudIconButton Icon="@Icons.Material.Filled.AddChart" Title="EDITAR" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" />
         <MudIconButton Icon="@Icons.Material.Filled.Person" Title="DETALHES" Variant="Variant.Outlined" Color="Color.Secondary" Size="Size.Small" />
-        <MudIconButton Icon="@Icons.Material.Filled.PersonRemove" Title="DEMITIR" Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Small" OnClick="@((e)=> Demitir(context.Id))" />
         <MudIconButton Icon="@Icons.Material.Filled.AddChart" Title="REQUISICOES" Variant="Variant.Outlined" Color="Color.Success" Size="Size.Small" HRef="@($"/requisicoesdocolaborador/{context.Id}")" />
-        <MudIconButton Icon="@Icons.Material.Filled.PersonAddDisabled" Title="DESABILITAR" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Small" OnClick="@((e)=> Desabilitar(context.Id))" />
-
-
-        @*  <TemplateColumn Context="data" Title="Actions">
-        <CellTemplate>
-        @if (data.Item.Available > 0 || !data.Item.Participants.Any(x => x.Id == CurrentUser.Id))
-        {
-        <MudFab StartIcon="@Icons.Material.Filled.PersonAdd" Color="Color.Success" OnClick="@signup(data.Item)" Size="Size.Small" />
-        }
-        else
-        {
-        <MudFab DisableElevation=true StartIcon="@Icons.Material.Filled.PersonAddDisabled" Color="Color.Default" Disabled Size="Size.Small" />
-        }
-        </CellTemplate>
-        </TemplateColumn>
-        *@
-
-
-
-
     </RowTemplate>
 
 
@@ -115,9 +54,6 @@
     </PagerContent>
 </MudTable>
 
-<MudText>Currently hovered: @(currentlyHoveredElement)</MudText>
-
-
 @code {
     private IEnumerable<Colaborador> pagedData;
     private MudTable<Colaborador> table;
@@ -126,12 +62,9 @@
     private int totalItems;
     private string searchString = null;
 
-    private string currentlyHoveredElement;
-    private string lastHoveredElement;
-
     private async Task<TableData<Colaborador>> ServerReload(TableState state)
     {
-        IEnumerable<Colaborador> data = await _colaboradorService.GetAllColaboradoresCltAdmittedTodayAsync();
+        IEnumerable<Colaborador> data = await _colaboradorService.GetAllColaboradoresFiredOnMonthAsync();
         await Task.Delay(300);
         data = data.Where(element =>
         {
@@ -206,16 +139,7 @@
         DialogService.Show<Colabs.DemitirColaborador>("", parameters);
     }
 
-    public void RowMouseEnterEvent(TableRowHoverEventArgs<Colaborador> eventArgs)
-    {
-        currentlyHoveredElement = eventArgs.Item.Id.ToString();
-    }
 
 
-    private void RowMouseLeaveEvent(TableRowHoverEventArgs<Colaborador> eventArgs)
-    {
-        currentlyHoveredElement = "";
-        lastHoveredElement = eventArgs.Item.Id.ToString();
-    }
 
 }
